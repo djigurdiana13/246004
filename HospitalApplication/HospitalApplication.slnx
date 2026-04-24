@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="HospitalApplication/HospitalApplication.csproj" />
+  <Project Path="HospitalLibrary.UniTests/HospitalLibrary.UniTests.csproj" />
+  <Project Path="HospitalLibrary/HospitalLibrary.csproj" />
+</Solution>
