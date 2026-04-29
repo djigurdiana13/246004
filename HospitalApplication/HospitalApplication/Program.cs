@@ -17,7 +17,6 @@ namespace HospitalApplication
                 dischargeDate: new DateTime(2003, 7, 15)
             );
 
-            // выводим короткую информацию
             Console.WriteLine("Patient:");
             foreach (var line in patient.GetInfo())
             {
