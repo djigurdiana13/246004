@@ -1,50 +1,85 @@
 ﻿using NUnit.Framework;
+using System;
 using HospitalLibrary;
 
-namespace HospitalLibrary.UniTests
+namespace HospitalLibrary.UnitTests
 {
     [TestFixture]
-    public class PersonUnitTests
+    public class PatientUnitTests
     {
         [Test]
         public void ConstructorTest()
         {
-            var john = CreateTestPerson();
 
-            Assert.That(john.Name, Is.EqualTo("John"));
-            Assert.That(john.Surname, Is.EqualTo("Smith"));
-            Assert.That(john.PolicyId, Is.EqualTo(12345)); 
+            var patient = CreateTestPatient();
 
-            Assert.That(john.AdmissionDate.ToString("dd.MM.yyyy"), Is.EqualTo("15.07.2003"));
-            Assert.That(john.DischargeDate.ToString("dd.MM.yyyy"), Is.EqualTo("15.07.2003"));
+            Assert.That(patient.Name, Is.EqualTo("Иван"));
+            Assert.That(patient.Surname, Is.EqualTo("Иванов"));
+            Assert.That(patient.PolicyNumber, Is.EqualTo("123456789"));
 
-            Assert.That(john.service, Is.EqualTo(ServiceType.Paid));
+
+            Assert.That(patient.Birthday.Year, Is.EqualTo(1990));
+            Assert.That(patient.Birthday.Month, Is.EqualTo(5));
+            Assert.That(patient.Birthday.Day, Is.EqualTo(20));
+
+            Assert.That(patient.PatientGender, Is.EqualTo(Gender.Male));
+        }
+
+        [Test]
+        public void AgeCalculationTest()
+        {
+    
+            var patient = CreateTestPatient();
+
+            int expectedAge = DateTime.Now.Year - 1990;
+            if (DateTime.Now < new DateTime(DateTime.Now.Year, 5, 20)) expectedAge--;
+
+            Assert.That(patient.Age, Is.EqualTo(expectedAge));
         }
 
         [Test]
         public void GetInfoTest()
         {
-            var john = CreateTestPerson();
-            var info = john.GetInfo();
+          
+            var patient = CreateTestPatient();
+            var info = patient.GetInfo();
 
+           
             Assert.That(info.Length, Is.EqualTo(2));
-            Assert.That(info[0], Is.EqualTo("John Smith"));
-            Assert.That(info[1], Does.Contain("Admission date: 15.07.2003"));
-            Assert.That(info[1], Does.Contain("Discharge date: 15.07.2003"));
-            Assert.That(info[1], Does.Contain("Service type: Paid"));
+
+      
+            Assert.That(info[0], Is.EqualTo("Иван Иванов (Полис: 123456789)"));
+
+            Assert.That(info[1], Contains.Substring("мужской"));
+            Assert.That(info[1], Contains.Substring("Возраст:"));
+            Assert.That(info[1], Contains.Substring("Поступил:"));
         }
 
-        private Person CreateTestPerson()
+        [Test]
+        public void SetTreatmentDetailsTest()
         {
-            return new Person
-                (
-                "John",
-                "Smith",
-                12345,
-                ServiceType.Paid,
-                new DateTime(2003, 7, 15),
-                new DateTime(2003, 7, 15)
+
+            var patient = CreateTestPatient();
+            patient.TreatmentCost = 15500.75m;
+            patient.Service = ServiceType.Paid;
+
+            Assert.That(patient.TreatmentCost, Is.EqualTo(15500.75m));
+            Assert.That(patient.Service, Is.EqualTo(ServiceType.Paid));
+        }
+
+        [Test]
+        public void InvalidBirthdayFormat_ThrowsException()
+        {
+    
+            Assert.Throws<ArgumentException>(() =>
+                new Person("Имя", "Фамилия", "000", "не-дата", Gender.Male)
             );
+        }
+
+        private Person CreateTestPatient()
+        {
+   
+            return new Person("Иван", "Иванов", "123456789", "20.05.1990", Gender.Male);
         }
     }
 }
