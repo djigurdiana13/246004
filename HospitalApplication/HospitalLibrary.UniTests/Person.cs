@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 
 namespace HospitalLibrary
@@ -7,7 +7,7 @@ namespace HospitalLibrary
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-    public string PolicyNumber { get; }    
+        public string PolicyNumber { get; }
         public DateTime Birthday { get; }
         public Gender PatientGender { get; }
 

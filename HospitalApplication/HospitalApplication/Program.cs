@@ -1,5 +1,5 @@
 ﻿using System;
-using HospitalLibrary;
+using HospitalLibrary; 
 
 namespace HospitalApplication
 {
@@ -7,24 +7,28 @@ namespace HospitalApplication
     {
         static void Main(string[] args)
         {
-            
+
             var patient = new Person(
                 name: "John",
                 surname: "Smith",
-                policyId: 12345,
-                service: ServiceType.Paid,
-                admissionDate: new DateTime(2003, 7, 15),
-                dischargeDate: new DateTime(2003, 7, 15)
+                policyNumber: "12345",     
+                birthday: "15.07.2003",    
+                gender: Gender.Male
             );
 
-            Console.WriteLine("Patient:");
-            foreach (var line in patient.GetInfo())
+      
+            patient.Service = ServiceType.Paid;
+            patient.AdmissionDate = new DateTime(2023, 7, 15);
+            patient.TreatmentCost = 15000.00m;
+
+            Console.WriteLine("=== Информация о пациенте ===");
+            string[] info = patient.GetInfo();
+            foreach (var line in info)
             {
                 Console.WriteLine(line);
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit...");
+            Console.WriteLine("\nНажмите любую клавишу для выхода...");
             Console.ReadKey();
         }
     }
