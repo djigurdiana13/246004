@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace HospitalLibrary
 {
@@ -67,5 +68,6 @@ namespace HospitalLibrary
             info[2] = $"Амбулаторный прием. Врач: {DoctorFullName}";
             return info;
         }
+
     }
 }
