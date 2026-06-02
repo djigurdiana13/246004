@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PhoneCallLibrary/PhoneCallLibrary.csproj" />
+  <Project Path="PhoneCallLibraryT/PhoneCallTests.csproj" />
+</Solution>
